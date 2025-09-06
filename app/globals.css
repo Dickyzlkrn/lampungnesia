@@ -40,5 +40,30 @@ body {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
+  background: #ffffff;
+}
+.hero-section {
+  position: relative;
+  min-height: 100vh; /* full layar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background image + overlay */
+  background-image: 
+    url('/images/bg.mp4'); /* simpan gambar di public/images */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Tambahan overlay transparan biar teks tetap kebaca */
+  isolation: isolate;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 12, 12, 0.26); /* overlay gelap */
+  z-index: -1;
 }

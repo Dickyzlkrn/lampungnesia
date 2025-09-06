@@ -1,20 +1,23 @@
 // app/page.js
-import Hero from './components/Hero'
+import PreloaderHero from './components/PreloaderHero'
 import Features from './components/Features'
 import Testimonials from './components/Testimonials'
-import CTA from './components/CTA' // <-- 1. Impor komponen baru
+import CTA from './components/CTA'
 import SliderBanner from './components/SliderBanner'
 import Pricing from './components/Pricing'
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <SliderBanner />
+      {/* Preloader + Hero */}
+      <PreloaderHero />
+
+      {/* Bagian lain muncul setelah Hero */}
       <Features />
+      <SliderBanner />
       <Testimonials />
       <Pricing />
-      <CTA /> {/* <-- 2. Letakkan di sini, sebelum Footer */}
+      <CTA />
     </>
   )
 }

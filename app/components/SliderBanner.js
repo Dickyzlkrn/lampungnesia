@@ -1,121 +1,123 @@
-// app/components/SliderBanner.js
-'use client';
+// app/components/ShowcaseSlider.js
+"use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
-// Menggunakan path gambar yang sudah Anda perbarui.
-const bannerImages = [
-  '/images/rdg.png',
-  '/images/rcg.png',
-  '/images/rrcs.jpg',
-  '/images/rrf.png',
+gsap.registerPlugin(ScrollTrigger);
+
+const slides = [
+  { src: "/images/1.jpg", title: "Pesona Lampung Digital" },
+  { src: "/images/2.jpg", title: "Keindahan Pantai dan Laut" },
+  { src: "/images/3.jpg", title: "Budaya & Tradisi Lokal" },
+  { src: "/images/4.jpg", title: "Festival & Kreativitas" },
 ];
 
-const SliderBanner = () => {
-  // Inisialisasi carousel dengan opsi loop
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  const [selectedIndex, setSelectedIndex] = useState(0);
+export default function ShowcaseSlider() {
+  const containerRef = useRef(null);
 
-  // Fungsi untuk navigasi
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  const scrollTo = useCallback((index) => {
-    if (emblaApi) emblaApi.scrollTo(index);
-  }, [emblaApi]);
-
-  // Efek untuk auto-play dan sinkronisasi titik indikator
   useEffect(() => {
-    if (!emblaApi) return;
+    const sections = gsap.utils.toArray(".slide");
 
-    // Set auto-play, ganti slide setiap 5 detik
-    const autoplay = setInterval(() => {
-      emblaApi.scrollNext();
-    }, 5000);
+    // Animasi horizontal utama
+    const scrollTween = gsap.to(sections, {
+      xPercent: -100 * (sections.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        id: "main-scroll",
+        trigger: containerRef.current,
+        pin: true,
+        scrub: 1.2,
+        snap: 1 / (sections.length - 1),
+        end: () => "+=" + containerRef.current.offsetWidth,
+      },
+    });
 
-    // Update dot indicator saat slide berubah
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
-    emblaApi.on('select', onSelect);
-    onSelect(); // Set dot awal saat komponen dimuat
+    // Efek zoom + animasi title per slide
+    sections.forEach((slide) => {
+      const img = slide.querySelector(".slide-img");
+      const title = slide.querySelector(".slide-title");
 
-    // Membersihkan interval dan event listener saat komponen dibongkar
-    return () => {
-      clearInterval(autoplay);
-      emblaApi.off('select', onSelect);
-    };
-  }, [emblaApi]);
+      // Zoom-in → normal → zoom-out
+      gsap.fromTo(
+        img,
+        { scale: 1.4 },
+        {
+          scale: 0.95,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: slide,
+            containerAnimation: scrollTween,
+            start: "left center",
+            end: "right center",
+            scrub: true,
+          },
+        }
+      );
+
+      // Title fade + zoom
+      gsap.fromTo(
+        title,
+        { opacity: 0, y: 80, scale: 0.85 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: slide,
+            containerAnimation: scrollTween,
+            start: "left center",
+            end: "center center",
+            scrub: true,
+          },
+        }
+      );
+
+      // Title keluar sedikit mengecil lagi
+      gsap.to(title, {
+        opacity: 0,
+        scale: 0.9,
+        y: -60,
+        ease: "power3.in",
+        scrollTrigger: {
+          trigger: slide,
+          containerAnimation: scrollTween,
+          start: "center center",
+          end: "right center",
+          scrub: true,
+        },
+      });
+    });
+  }, []);
 
   return (
-    <section className="py-12">
-      <motion.div
-        className="container mx-auto max-w-6xl"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        {/* --- STYLE DIUBAH DI SINI UNTUK EFEK GLASSMORPHISM --- */}
-        <div className="relative overflow-hidden rounded-2xl bg-slate-900/10 backdrop-blur-sm border border-slate-700/20" ref={emblaRef}>
-          <div className="flex">
-            {bannerImages.map((src, index) => (
-              <div className="relative flex-[0_0_100%]" key={index}>
-                <Image
-                  src={src}
-                  alt={`Banner RRI Digital ${index + 1}`}
-                  width={1920}
-                  height={1080}
-                  // Menambahkan sedikit opasitas pada gambar agar background glassy terlihat
-                  className="w-full h-auto object-cover aspect-video opacity-95"
-                  priority={index === 0}
-                />
-              </div>
-            ))}
-          </div>
+    <div ref={containerRef} className="w-full h-screen overflow-hidden flex">
+      {slides.map((slide, i) => (
+        <section
+          key={i}
+          className="slide relative flex-shrink-0 w-screen h-screen flex items-center justify-center"
+        >
+          {/* Background Image */}
+          <Image
+            src={slide.src}
+            alt={slide.title}
+            fill
+            priority={i === 0}
+            className="slide-img object-cover will-change-transform"
+          />
 
-          {/* Tombol Navigasi dengan efek glassmorphism yang lebih kuat */}
-          <button
-            onClick={scrollPrev}
-            className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white p-2 rounded-full transition-all z-10 border border-white/20"
-            aria-label="Previous slide"
-          >
-            <FiChevronLeft size={24} />
-          </button>
-          <button
-            onClick={scrollNext}
-            className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white p-2 rounded-full transition-all z-10 border border-white/20"
-            aria-label="Next slide"
-          >
-            <FiChevronRight size={24} />
-          </button>
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/40" />
 
-          {/* Titik Indikator */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-            {bannerImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => scrollTo(index)}
-                className={`w-2.5 h-2.5 rounded-full transition-all backdrop-blur-sm ${
-                  index === selectedIndex ? 'bg-white' : 'bg-white/30'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-      </motion.div>
-    </section>
+          {/* Title */}
+          <h2 className="slide-title relative z-10 text-white text-4xl md:text-6xl font-bold drop-shadow-2xl text-center">
+            {slide.title}
+          </h2>
+        </section>
+      ))}
+    </div>
   );
-};
-
-export default SliderBanner;
+}

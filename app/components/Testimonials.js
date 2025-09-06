@@ -1,116 +1,111 @@
-// app/components/Testimonials.js
-/* eslint-disable react/no-unescaped-entities */
+// app/components/PotensiEkonomi.js
 'use client';
 
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { FaQuoteLeft } from 'react-icons/fa';
+import gsap from 'gsap';
 
-// Data untuk testimonial. Ganti dengan data asli Anda.
-// Untuk foto, Anda bisa menggunakan URL dari layanan seperti Unsplash,
-// atau unggah foto ke folder /public Anda.
-const testimonialsData = [
+// Data card potensi ekonomi
+const dataPotensi = [
   {
-    quote: "This platform transformed our workflow. The speed and user experience are simply unparalleled. We launched our project weeks ahead of schedule!",
-    name: 'Sarah Johnson',
-    title: 'CEO, Innovate Inc.',
-    avatar: '/avatars/sarah.jpg', // Contoh path ke folder public
+    title: 'Pariwisata Bahari',
+    desc: 'Lampung memiliki potensi wisata pantai kelas dunia seperti Pahawang dan Tanjung Setia.',
+    img: '/images/1.jpg',
   },
   {
-    quote: "I was skeptical at first, but the features are incredibly powerful and intuitive. The support team is also top-notch. Highly recommended!",
-    name: 'Michael Chen',
-    title: 'Lead Developer, Tech Solutions',
-    avatar: '/avatars/michael.jpg',
+    title: 'Perkebunan Kopi',
+    desc: 'Daerah Lampung terkenal sebagai penghasil kopi robusta terbaik di Indonesia.',
+    img: '/images/2.jpg',
   },
   {
-    quote: "A game-changer for our agency. We can now deliver high-quality websites to our clients faster than ever. Radison is a must-have tool.",
-    name: 'Emily Rodriguez',
-    title: 'Creative Director, Design Hub',
-    avatar: '/avatars/emily.jpg',
+    title: 'Pertanian Padi',
+    desc: 'Sektor pertanian padi masih menjadi tulang punggung perekonomian masyarakat.',
+    img: '/images/3.jpg',
+  },
+  {
+    title: 'Energi Terbarukan',
+    desc: 'Lampung memiliki potensi PLTA dan energi surya yang terus dikembangkan.',
+    img: '/images/4.jpg',
+  },
+  {
+    title: 'UMKM & Ekonomi Kreatif',
+    desc: 'Batik Lampung, kerajinan tangan, hingga kuliner khas membuka peluang besar.',
+    img: '/images/2.jpg',
+  },
+  {
+    title: 'Industri Perikanan',
+    desc: 'Wilayah pesisir menjadikan Lampung salah satu produsen ikan terbesar di Sumatera.',
+    img: '/images/4.jpg',
   },
 ];
 
-const Testimonials = () => {
-  const sectionAnimation = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-        staggerChildren: 0.2,
-      },
-    },
-  };
+export default function PotensiEkonomi() {
+  const cardsRef = useRef([]);
 
-  const itemAnimation = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
+  useEffect(() => {
+    gsap.fromTo(
+      cardsRef.current,
+      {
+        y: 80,
+        opacity: 0,
+        scale: 0.9,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'power3.out',
+        stagger: {
+          amount: 1,
+          from: 'random',
+        },
+      }
+    );
+  }, []);
 
   return (
-    <section id="testimonials" className="py-20 md:py-28 px-4 bg-[#2b0e7013]">
-      <div className="container mx-auto max-w-6xl">
-        {/* Judul Bagian */}
-        <div className="text-center mb-12 md:mb-16">
-          <motion.h2 
-            className="text-4xl md:text-5xl font-bold tracking-tighter mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6 }}
-          >
-            Apa Kata Pendengar
-          </motion.h2>
-          <motion.p 
-            className="text-lg text-slate-400 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            See what our happy customers have to say about their experience.
-          </motion.p>
+    <section id="potensi-ekonomi" className="py-20 md:py-28 px-6 bg-gradient-to-b from-[#0f0f1a] to-[#1a1a2e] relative overflow-hidden">
+      <div className="container mx-auto max-w-7xl">
+        {/* Judul Section */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+            Potensi & Ekonomi Daerah Lampung
+          </h2>
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            Sumber daya dan peluang unggulan yang menjadi penggerak pembangunan daerah.
+          </p>
         </div>
 
-        {/* Grid untuk Kartu Testimonial */}
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-          variants={sectionAnimation}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {testimonialsData.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className="bg-[#121212] p-8 rounded-xl border border-slate-800/50 flex flex-col justify-between"
-              variants={itemAnimation}
+        {/* Grid Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[200px]">
+          {dataPotensi.map((item, idx) => (
+            <div
+              key={idx}
+              ref={(el) => (cardsRef.current[idx] = el)}
+              className={`relative group overflow-hidden rounded-2xl shadow-lg border border-slate-800/50 bg-[#121212] 
+              ${idx % 3 === 0 ? 'sm:row-span-2' : 'sm:row-span-1'}`}
             >
-              <div>
-                <FaQuoteLeft className="text-3xl text-slate-600 mb-4" />
-                <p className="text-slate-300 italic">"{testimonial.quote}"</p>
+              {/* Gambar */}
+              <Image
+                src={item.img}
+                alt={item.title}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors duration-500"></div>
+
+              {/* Konten */}
+              <div className="absolute bottom-0 p-5 text-white z-10">
+                <h3 className="font-bold text-xl mb-2">{item.title}</h3>
+                <p className="text-sm text-slate-300">{item.desc}</p>
               </div>
-              <div className="flex items-center mt-6">
-                <Image
-                  src={testimonial.avatar}
-                  alt={testimonial.name}
-                  width={48}
-                  height={48}
-                  className="rounded-full mr-4"
-                />
-                <div>
-                  <h4 className="font-bold text-white">{testimonial.name}</h4>
-                  <p className="text-sm text-slate-400">{testimonial.title}</p>
-                </div>
-              </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
-};
-
-export default Testimonials;
+}

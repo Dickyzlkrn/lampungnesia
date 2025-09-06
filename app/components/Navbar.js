@@ -66,10 +66,10 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/images/rri.png"
+              src="/images/lpg.png"
               alt="Logo RRI"
-              width={100}
-              height={100}
+              width={40}
+              height={40}
               priority
             />
           </Link>
