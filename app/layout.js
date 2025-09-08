@@ -12,7 +12,7 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: 'RRI BANDARLAMPUNG',
+  title: 'Lampungnesia - Jelajahi Lampung',
   description: 'A modern and minimalist template for startups, agencies, and creatives, built with Next.js and Framer Motion.',
 }
 

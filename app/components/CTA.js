@@ -1,37 +1,86 @@
-// app/components/CTA.js
+// app/components/PetaLampung.js
 'use client';
 
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-const CTA = () => {
-    return (
-        <section className="py-20 md:py-28 px-4">
-            <div className="container mx-auto max-w-4xl">
-                <motion.div
-                    className="bg-gradient-to-br from-slate-900 to-slate-800/70 p-12 md:p-16 rounded-2xl text-center border border-slate-800"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.6, ease: 'easeOut' }}
-                >
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">
-                        Mulai Beriklan Bersama RRI Bandarlampung
-                    </h2>
-                    <p className="text-lg text-slate-400 max-w-xl mx-auto mb-8">
-                        Join thousands of creators and businesses who are building faster and better with our platform. Start your free trial today.
-                    </p>
-                    <motion.button
-                        className="bg-blue-500 text-white font-bold px-8 py-4 rounded-lg text-lg hover:bg-blue-600 transition duration-300"
-                        whileHover={{ scale: 1.05, boxShadow: '0px 0px 20px rgba(59, 130, 246, 0.5)' }} // Biru glow
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        Get Started for Free
-                    </motion.button>
+gsap.registerPlugin(ScrollTrigger);
 
-                </motion.div>
-            </div>
-        </section>
-    );
+const galeriLampung = [
+  { name: 'Pantai Pasir Putih', src: '/images/1.jpg' },
+  { name: 'Gunung Krakatau', src: '/images/2.jpg' },
+  { name: 'Danau Ranau', src: '/images/3.jpg' },
+  { name: 'Way Kambas', src: '/images/2.jpg' },
+  { name: 'Pulau Pahawang', src: '/images/1.jpg' },
+  { name: 'Bukit Senyum', src: '/images/3.jpg' },
+];
+
+function randomSizeVariant(i) {
+  const variants = [
+    'span 1 / span 1',
+    'span 1 / span 2',
+    'span 2 / span 1',
+    'span 2 / span 2',
+  ];
+  return variants[i % variants.length];
+}
+
+const PetaLampung = () => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const items = containerRef.current.querySelectorAll('.galeri-item');
+
+    items.forEach((item) => {
+      gsap.fromTo(
+        item,
+        { opacity: 0, scale: 0.8, y: 50 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 90%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
+      item.addEventListener('mouseenter', () => {
+        gsap.to(item, { scale: 1.05, duration: 0.3, ease: 'power2.out' });
+      });
+      item.addEventListener('mouseleave', () => {
+        gsap.to(item, { scale: 1, duration: 0.3, ease: 'power2.out' });
+      });
+    });
+  }, []);
+
+  return (
+    <section className="py-0 px-0 overflow-hidden">
+      <div
+        ref={containerRef}
+        className="grid grid-cols-4 auto-rows-fr gap-0 w-full h-full"
+      >
+        {galeriLampung.map((item, i) => (
+          <div
+            key={i}
+            className="galeri-item relative overflow-hidden"
+            style={{ gridArea: randomSizeVariant(i) }}
+          >
+            <img
+              src={item.src}
+              alt={item.name}
+              className="w-full h-full object-cover transition-transform duration-300"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 };
 
-export default CTA;
+export default PetaLampung;
