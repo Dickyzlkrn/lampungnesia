@@ -4,7 +4,7 @@ import './globals.css'
 
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import CursorGlow from './components/CursorGlow' // <-- 1. Impor komponen baru
+import CursorGlow from './components/CursorGlow'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -13,15 +13,20 @@ const inter = Inter({
 
 export const metadata = {
   title: 'Lampungnesia - Jelajahi Lampung',
-  
+  description: 'Platform untuk menjelajahi keindahan Lampung',
+  icons: {
+    icon: '/images/lpg.png',       // favicon utama
+    shortcut: '/images/lpg.png',   // untuk browser lama
+    apple: '/images/lpg.png',      // untuk iOS
+  },
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="!scroll-smooth">
       <body className={inter.className}>
-        <CursorGlow /> {/* <-- 2. Letakkan di sini */}
-        <div className="relative z-40"> {/* Kita butuh wrapper ini */}
+        <CursorGlow />
+        <div className="relative z-40">
           <Navbar />
           <main>
             {children}

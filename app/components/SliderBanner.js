@@ -9,10 +9,10 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const slides = [
-  { src: "/images/1.jpg", title: "Pesona Lampung Digital" },
-  { src: "/images/2.jpg", title: "Keindahan Pantai dan Laut" },
-  { src: "/images/3.jpg", title: "Budaya & Tradisi Lokal" },
-  { src: "/images/4.jpg", title: "Festival & Kreativitas" },
+  { src: "/images/lpg.jpg", title: "Pesona Lampung Digital" },
+  { src: "/images/ptais.jpg", title: "Keindahan Pantai dan Laut" },
+  { src: "/images/bdy.jpg", title: "Budaya & Tradisi Lokal" },
+  { src: "/images/bdya.jpg", title: "Festival & Kreativitas" },
 ];
 
 export default function ShowcaseSlider() {

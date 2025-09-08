@@ -8,9 +8,9 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const galeriLampung = [
-  { name: 'Pantai Pasir Putih', src: '/images/1.jpg' },
-  { name: 'Gunung Krakatau', src: '/images/2.jpg' },
-  { name: 'Danau Ranau', src: '/images/3.jpg' },
+  { name: 'Pantai Pasir Putih', src: '/images/pantai.jpg' },
+  { name: 'Gunung Krakatau', src: '/images/ptais.jpg' },
+  { name: 'Danau Ranau', src: '/images/lpg.jpg' },
   { name: 'Way Kambas', src: '/images/2.jpg' },
   { name: 'Pulau Pahawang', src: '/images/1.jpg' },
   { name: 'Bukit Senyum', src: '/images/3.jpg' },

@@ -1,4 +1,3 @@
-// app/components/Footer.js
 'use client';
 
 import { motion } from 'framer-motion';
@@ -28,38 +27,46 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="bg-slate-900/70 backdrop-blur-sm border-t border-slate-700/50 text-slate-400 py-16 px-6"
+      className="relative bg-slate-900/80 backdrop-blur-md border-t border-slate-700/50 text-slate-300 py-16 px-6 overflow-hidden"
       variants={footerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
     >
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+      {/* Aurora Background Footer */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute w-[150%] h-[150%] -top-1/4 -left-1/4 bg-gradient-to-r from-purple-600/20 via-blue-500/20 to-teal-400/20 blur-3xl animate-[aurora_18s_linear_infinite]" />
+        <div className="absolute w-[120%] h-[120%] top-1/4 left-1/4 bg-gradient-to-r from-pink-500/20 via-yellow-400/20 to-green-400/20 blur-3xl animate-[aurora_20s_linear_infinite_reverse]" />
+      </div>
+
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left relative z-10">
         
         {/* Kolom 1: Logo & Deskripsi */}
         <div className="md:col-span-2">
           <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-             <Image
-              src="/images/rri.png" // Pastikan path ini benar
+            <Image
+              src="/images/rri.png"
               alt="Logo RRI Bandar Lampung"
-              width={100}
-              height={100}
+              width={90}
+              height={90}
+              className="rounded-lg"
             />
-
+            <h3 className="text-white font-bold text-xl">Jelajahi Lampung</h3>
           </div>
-          <p className="text-sm max-w-md mx-auto md:mx-0">
-            Sekali di Udara, Tetap di Udara. Radio Republik Indonesia berkomitmen menjadi radio publik yang menyajikan informasi terpercaya, edukasi, dan hiburan untuk membangun bangsa.
+          <p className="text-sm max-w-md mx-auto md:mx-0 leading-relaxed">
+            Lampung, pintu gerbang Sumatera, menyimpan pesona pantai, gunung, budaya, hingga kuliner khas.
+            RRI Bandar Lampung mendukung promosi pariwisata daerah melalui informasi, edukasi, dan hiburan untuk masyarakat.
           </p>
         </div>
 
         {/* Kolom 2: Link Cepat */}
         <div>
-          <h4 className="font-semibold text-white mb-4">Navigasi</h4>
+          <h4 className="font-semibold text-white mb-4">Eksplorasi</h4>
           <ul className="space-y-2 text-sm">
-            <li><Link href="#programa" className="hover:text-white transition-colors">Programa</Link></li>
-            <li><Link href="#iklan" className="hover:text-white transition-colors">Iklan</Link></li>
-            <li><Link href="#harga" className="hover:text-white transition-colors">Harga</Link></li>
-            <li><Link href="#" className="hover:text-white transition-colors">Tentang Kami</Link></li>
+            <li><Link href="#pariwisata" className="hover:text-white transition-colors">Pariwisata</Link></li>
+            <li><Link href="#budaya" className="hover:text-white transition-colors">Budaya</Link></li>
+            <li><Link href="#kuliner" className="hover:text-white transition-colors">Kuliner</Link></li>
+            <li><Link href="#ekonomi" className="hover:text-white transition-colors">Ekonomi Daerah</Link></li>
           </ul>
         </div>
 
@@ -84,11 +91,10 @@ const Footer = () => {
             ))}
           </div>
         </div>
-
       </div>
       
-      <div className="mt-12 border-t border-slate-700 pt-8 text-center text-sm">
-        <p>&copy; {new Date().getFullYear()} LPP RRI Bandar Lampung. All Rights Reserved.</p>
+      <div className="mt-12 border-t border-slate-700 pt-8 text-center text-sm relative z-10">
+        <p>&copy; {new Date().getFullYear()} Jelajahi Provinsi Lampung. All Rights Reserved.</p>
       </div>
     </motion.footer>
   );

@@ -14,17 +14,17 @@ const dataPotensi = [
   {
     title: 'Perkebunan Kopi',
     desc: 'Daerah Lampung terkenal sebagai penghasil kopi robusta terbaik di Indonesia.',
-    img: '/images/2.jpg',
+    img: '/images/kopi.jpg',
   },
   {
     title: 'Pertanian Padi',
     desc: 'Sektor pertanian padi masih menjadi tulang punggung perekonomian masyarakat.',
-    img: '/images/3.jpg',
+    img: '/images/sawah.jpg',
   },
   {
     title: 'Energi Terbarukan',
     desc: 'Lampung memiliki potensi PLTA dan energi surya yang terus dikembangkan.',
-    img: '/images/4.jpg',
+    img: '/images/eng.jpg',
   },
   {
     title: 'UMKM & Ekonomi Kreatif',
@@ -34,7 +34,7 @@ const dataPotensi = [
   {
     title: 'Industri Perikanan',
     desc: 'Wilayah pesisir menjadikan Lampung salah satu produsen ikan terbesar di Sumatera.',
-    img: '/images/4.jpg',
+    img: '/images/ikn.jpg',
   },
 ];
 
