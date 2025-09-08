@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata = {
   title: 'Lampungnesia - Jelajahi Lampung',
-  description: 'A modern and minimalist template for startups, agencies, and creatives, built with Next.js and Framer Motion.',
+  
 }
 
 export default function RootLayout({ children }) {
