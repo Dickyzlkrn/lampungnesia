@@ -45,7 +45,7 @@ const Footer = () => {
         <div className="md:col-span-2">
           <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
             <Image
-              src="/images/rri.png"
+              src="/images/lpg.png"
               alt="Logo RRI Bandar Lampung"
               width={90}
               height={90}
